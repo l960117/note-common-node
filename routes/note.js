@@ -21,7 +21,7 @@ router.post('/note-list', function(req, res, next) {
       })
     }
     return res.json({
-      data: results,
+      data: results || [],
       resultCode: 200
     })
   })
@@ -37,7 +37,7 @@ router.post('/note-list-all', function(req, res, next) {
       })
     }
     return res.json({
-      data: results,
+      data: results || [],
       resultCode: 200
     })
   })
@@ -109,5 +109,18 @@ router.post('/upload', upload.single('Filedata'), function(req, res, next) {
     }
   })
 })
+
+router.post('/delete-note', function(req, res, results) {
+  
+})
+
+router.post('/collect-note', function(req, res, results) {
+
+})
+
+router.post('/cancel-collect-note', function(req, res, results) {
+
+})
+
 
 module.exports = router;
