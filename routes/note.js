@@ -68,9 +68,9 @@ router.post('/addNote', function(req, res, next) {
 })
 
 var upload = multer({
-  dest: 'uploads/images'
+  dest: 'static/images'
 })
-router.post('/upload', upload.single('Filedata'), function(req, res, next) {
+router.post('/static', upload.single('Filedata'), function(req, res, next) {
   let file = req.file;
   let query = req.query
   if (!file) {
@@ -83,9 +83,9 @@ router.post('/upload', upload.single('Filedata'), function(req, res, next) {
       resultCode: 5000
     })
   }
-  var oldfliepath = path.join('./',"uploads/images",file.filename)
+  var oldfliepath = path.join('./',"static/images",file.filename)
   var newfileName = file.filename + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]
-  var newfilepath = path.join('./',"uploads/images", newfileName)
+  var newfilepath = path.join('./',"static/images", newfileName)
   fs.rename(oldfliepath,newfilepath,function(err){
     if (err) throw err;
     fs.stat(newfilepath, function (err, stats) {
