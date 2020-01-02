@@ -20,8 +20,20 @@ router.post('/note-list', function(req, res, next) {
         errorDescription: '获取失败'
       })
     }
+    var totalPublic = 0
+    var totalPrivate = 0
+    if (results) {
+      results.forEach(item => {
+        item.type === 'private' ? totalPrivate++ : totalPublic++
+      });
+    }
     return res.json({
-      data: results || [],
+      data: {
+        results: results || [],
+        totalPrivate: totalPrivate,
+        totalPublic: totalPublic,
+        total: totalPrivate + totalPublic
+      },
       resultCode: 200
     })
   })
