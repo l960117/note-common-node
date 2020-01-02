@@ -49,7 +49,10 @@ router.post('/note-list-all', function(req, res, next) {
       })
     }
     return res.json({
-      data: results || [],
+      data: {
+        results: results || [],
+        total: results.length
+      },
       resultCode: 200
     })
   })
