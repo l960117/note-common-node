@@ -41,7 +41,7 @@ router.post('/note-list', function(req, res, next) {
 
 router.post('/note-list-all', function(req, res, next) {
   let query = req.body
-  conn.query(sql.getNoteListAllSql, [query.start, query.length], (error, results) => {
+  conn.query(query.type === 'public' ? sql.getNoteListAllSql : sql.getNoteListPrivateSql, query.type === 'public' ? [query.type, query.start, query.length] : [query.type, query.openid, query.start, query.length], (error, results) => {
     if (error) {
       return res.json({
         resultCode: 5000,
