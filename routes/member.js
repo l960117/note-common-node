@@ -25,8 +25,7 @@ router.post('/login', function(req, res, next) {
             })
           }
           if (results && results.length === 0) {
-            console.log(data.openid)
-            conn.query(sql.registerSql, data.openid, (error, results) => {
+            conn.query(sql.registerSql, [data.openid, query,avatar, query.nickname], (error, results) => {
               if (error) {
                 return res.json({
                   resultCode: 5000,
@@ -39,9 +38,11 @@ router.post('/login', function(req, res, next) {
               })
             })
           } else {
-            return res.json({
-              resultCode: 200,
-              data: body
+            conn.query(sql.updateUserSql, [query.nickname, query.avatar, data.openid], (error, results) => {
+              return res.json({
+                resultCode: 200,
+                data: body
+              })
             })
           }
         })
