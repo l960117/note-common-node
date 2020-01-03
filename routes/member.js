@@ -7,7 +7,7 @@ const sql = require('../dbBase/sql.js');
 /* GET users listing. */
 router.post('/login', function(req, res, next) {
   let query = req.body
-  let url = `https://api.weixin.qq.com/sns/jscode2session?appid=wx04dafcc81b44ddd4&secret=bb89e0c3e0efaee1a368dccacb0db77e&js_code=${query.code}&grant_type=authorization_code`
+  let url = `https://api.weixin.qq.com/sns/jscode2session?appid=wxa472f7234434d37b&secret=32720b8e3d1761889a3c75a6aca33ea7&js_code=${query.code}&grant_type=authorization_code`
   request(
     {
       url: url,
