@@ -25,7 +25,7 @@ router.post('/login', function(req, res, next) {
             })
           }
           if (results && results.length === 0) {
-            conn.query(sql.registerSql, [data.openid, query,avatar, query.nickname], (error, results) => {
+            conn.query(sql.registerSql, [data.openid, query.avatar, query.nickname], (error, results) => {
               if (error) {
                 return res.json({
                   resultCode: 5000,
