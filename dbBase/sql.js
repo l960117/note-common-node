@@ -14,6 +14,6 @@ const sql = {
   cancenCollectNoteSql: 'delete from collect_note where collectId = ?',
   getFollowSql: 'select * from (select * from relation where openid=?)as a left join account on a.openid=account.openid',
   getFensSql: 'select * from (select * from relation where firendid=?)as a left join account on a.openid=account.openid',
-  getRecommendSql: 'select * from (select * from relation where openid=?)as a left join account on a.openid<>account.openid'
+  getRecommendSql: 'select * from (select openid as id from relation where openid=?)as a left join account on a.openid<>account.openid'
 }
 module.exports = sql
