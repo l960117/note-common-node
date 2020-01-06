@@ -104,4 +104,49 @@ router.post('/getRecommend', function(req, res, next) {
   })
 })
 
+router.post('/addFollow', function(req, res, next) {
+  let query = req.body
+  conn.query(sql.addFollowSql, [query.openid, query.friendid], (error, results) => {
+    if (error) {
+      return res.json({
+        resultCode: 5000,
+        errorDescription: '添加失败'
+      })
+    }
+   if (results&&results.insertId > 0) {
+     return res.json({
+       resultCode: 200
+     })
+   } else {
+     return res.json({
+       resultCode: 5000,
+       errorDescription: '添加失败'
+     })
+   }
+  })
+})
+
+router.post('/cancelFollow', function(req, res, next) {
+  let query = req.body
+  conn.query(sql.cancelFollowSql, [query.openid, query.friendid], (error, results) => {
+    if (error) {
+      console.log(error)
+      return res.json({
+        resultCode: 5000,
+        errorDescription: '取消失败'
+      })
+    }
+    if (results&&results.affectedRows > 0) {
+      return res.json({
+        resultCode: 200
+      })
+    } else {
+      return res.json({
+        resultCode: 5000,
+        errorDescription: '取消失败'
+      })
+    }
+  })
+})
+
 module.exports = router;
