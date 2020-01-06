@@ -55,4 +55,52 @@ router.post('/login', function(req, res, next) {
     });
 });
 
+router.post('/getFollowAndFens', async function(req, res, next) {
+  let query = req.body
+  let followList = null
+  let fensList = null
+  await conn.query(sql.getFollowSql, query.openid, (error, results) => {
+    if (error) {
+      return res.json({
+        resultCode: 5000,
+        errorDescription: '获取失败'
+      })
+    }
+    followList = results
+  })
+  await conn.query(sql.getFensSql, query.openid, (error, results) => {
+    if (error) {
+      return res.json({
+        resultCode: 5000,
+        errorDescription: '获取失败'
+      })
+    }
+    fensList = results
+    return res.json({
+      resultCode: 200,
+      data: {
+        fensList,
+        followList
+      }
+    })
+  })
+})
+
+router.get('/getRecommend', function(req, res, next) {
+  conn.query(sql.getRecommendSql, (error, results) => {
+    if (error) {
+      return res.json({
+        resultCode: 200,
+        errorDescription: '获取失败'
+      })
+    }
+    return res.json({
+      resultCode: 200,
+      data: {
+        recommendList: results || []
+      }
+    })
+  })
+})
+
 module.exports = router;
