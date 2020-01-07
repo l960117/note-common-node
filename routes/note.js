@@ -61,8 +61,8 @@ router.post('/note-list-all', function(req, res, next) {
 
 router.post('/addNote', function(req, res, next) {
   let query = req.body
-  const { openid, content, type, username, images } = query
-  conn.query(sql.addNoteSql, [openid, content, type, nickname, images], (error, reuslts) => {
+  const { openid, content, type, images, editOpenid, color } = query
+  conn.query(sql.addNoteSql, [openid, content, type, images, editOpenid, color], (error, reuslts) => {
     if (error) {
       return res.json({
         resultCode: 5000,
@@ -78,49 +78,6 @@ router.post('/addNote', function(req, res, next) {
       return res.json({
         resultCode: 5000,
         errorDescription: '添加失败'
-      })
-    }
-  })
-})
-
-var upload = multer({
-  dest: 'static/images'
-})
-router.post('/static', upload.single('Filedata'), function(req, res, next) {
-  let file = req.file;
-  let query = req.query
-  if (!file) {
-    return res.json({
-      resultCode: 5000
-    })
-  }
-  if (!query.noteId) {
-    return res.json({
-      resultCode: 5000
-    })
-  }
-  var oldfliepath = path.join('./',"static/images",file.filename)
-  var newfileName = file.filename + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]
-  var newfilepath = path.join('./',"static/images", newfileName)
-  fs.rename(oldfliepath,newfilepath,function(err){
-    if (err) throw err;
-    fs.stat(newfilepath, function (err, stats) {
-        if (err) throw err;
-      });
-  });
-  conn.query(sql.updateImagesSql, [newfileName, query.noteId], (err, results) => {
-    if (err) {
-      res.json({
-        resultCode: 5000
-      })
-    }
-    if (results) {
-      return res.json({
-        resultCode: 200
-      })
-    } else {
-      return res.json({
-        resultCode: 5000
       })
     }
   })
