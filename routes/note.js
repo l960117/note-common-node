@@ -62,7 +62,7 @@ router.post('/note-list-all', function(req, res, next) {
 router.post('/addNote', function(req, res, next) {
   let query = req.body
   const { openid, content, type, images, editOpenid, color } = query
-  conn.query(sql.addNoteSql, [openid, content, type, images, editOpenid, color], (error, reuslts) => {
+  conn.query(sql.addNoteSql, [openid, content, type, images, editOpenid, color], (error, results) => {
     if (error) {
       return res.json({
         resultCode: 5000,
