@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const conn = require('../utils/dbUtils.js');
 const sql = require('../dbBase/sql.js');
+var formidable = require("formidable");
 const multer  = require('multer');
 var path = require('path');
 var fs = require('fs');
@@ -135,6 +136,32 @@ router.post('/collect-note', function(req, res, results) {
 
 router.post('/cancel-collect-note', function(req, res, results) {
 
+})
+
+
+var upload = multer({
+  dest: 'static/uploads'
+})
+router.post('/upload', upload.single('file'), function(req, res, results) {
+ let file = req.file
+  if (!file) {
+    return res.json({
+      resultCode: 5000,
+      errorDescription: '文件不存在'
+    })
+  }
+  var oldfliepath = path.join('./',"static/uploads",file.filename)
+  var newfileName = file.filename + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]
+  var newfilepath = path.join('./',"static/uploads", newfileName)
+  fs.rename(oldfliepath,newfilepath,function(err){
+    if (err) throw err;
+    return res.json({
+      resultCode: 200,
+      data: {
+        fileName: newfileName
+      }
+    })
+  });
 })
 
 
