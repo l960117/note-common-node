@@ -149,4 +149,39 @@ router.post('/cancelFollow', function(req, res, next) {
   })
 })
 
+router.post('/getUserNoteInfo', function (req, res, next) {
+  let query = req.body
+  conn.query(sql.getUserInfo, query.openid, (error, results) => {
+    if (error) {
+      return res.json({
+        resultCode: 5000,
+        errorDescription: '获取失败'
+      })
+    }
+    conn.query(sql.getNoteInfoSql, query.openid, (error1, results1) => {
+      if (error1) {
+        return res.json({
+          resultCode: 5000,
+          errorDescription: '获取失败'
+        })
+      }
+      if (results&&results1) {
+        return res.json({
+          data: {
+            userInfo: results[0] || null,
+            total: results1[0]['count(*)'] || 0
+          },
+          resultCode: 200
+        })
+      } else {
+        return res.json({
+          resultCode: 5000,
+          errorDescription: '暂无数据'
+        })
+      }
+      console.log(results, results1)
+    })
+  })
+})
+
 module.exports = router;
