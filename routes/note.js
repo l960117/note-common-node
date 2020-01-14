@@ -85,7 +85,7 @@ router.post('/addNote', function(req, res, next) {
 
 router.post('/getPublicNote', function(req, res,results) {
   let query = req.body
-  conn.query(sql.getPublicNoteListSql, query.openid, (error, results) => {
+  conn.query(sql.getPublicNoteListSql, [query.openid, query.start, query.length], (error, results) => {
     if (error) {
       return res.json({
         resultCode: 5000,

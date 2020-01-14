@@ -4,7 +4,7 @@ const sql = {
   registerSql: 'insert into account (openid, avatar, nickname) values (?,?,?)',
   updateUserSql: 'update account set nickname=?, avatar=? where openid = ?',
   getNoteListSql: 'select * from note_list where openid = ?',
-  getPublicNoteListSql: 'select * from note_list where openid = ? and type=public',
+  getPublicNoteListSql: 'select * from note_list where openid = ? and type=public order by noteTime limit ?,?',
   getNoteListAllSql: 'select * from (select * from note_list where type=? order by noteTime desc limit ?,?)as a left join(select * from account )as b on a.openid=b.openid ',
   getNoteListPrivateSql: 'select * from (select * from note_list where type=? and openid=? order by noteTime desc limit ?,?)as a left join(select * from account )as b on a.openid=b.openid ',
   addNoteSql: 'insert into note_list (openid, content, type, images, editOpenid, color) values (?,?,?,?,?,?)',
