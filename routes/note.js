@@ -126,7 +126,19 @@ router.post('/getNoteDetail', function(req, res, results) {
 })
 
 router.post('/delete-note', function(req, res, results) {
-  
+  let query = req.body
+  conn.query(sql.deleteNoteSql, query.noteId, (error, results) => {
+    if (error) {
+      return res.json({
+        resultCode: 5000,
+        errorDescription: '删除失败'
+      })
+    }
+    return res.json({
+      resultCode: 200,
+      message: 'success'
+    })
+  })
 })
 
 router.post('/collect-note', function(req, res, results) {
