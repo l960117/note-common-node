@@ -12,6 +12,7 @@ const sql = {
   deleteNoteCollectSql: 'delete from collect_note where noteId=?',
   collectNoteSql: 'insert into collect_note (noteId, openid) values (?,?)',
   cancenCollectNoteSql: 'delete from collect_note where collectId = ?',
+  getNoteDetailSql: 'select * from (select * from note_list where noteId=?)as a left join(select * from account )as b on a.openid=b.openid',
   getFollowSql: 'select * from (select * from relation where openid=?)as a left join account on a.openid=account.openid',
   getFensSql: 'select * from (select * from relation where friendid=?)as a left join account on a.openid=account.openid',
   getRecommendSql: 'select * from (select openid as id from relation where openid=?)as a left join account on a.id<>account.openid order by rand() limit 3',

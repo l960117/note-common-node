@@ -102,6 +102,29 @@ router.post('/getPublicNote', function(req, res,results) {
   })
 })
 
+router.post('/getNoteDetail', function(req, res, results) {
+  let query = req.body
+  conn.query(sql.getNoteDetailSql, query.noteId, (error, results) => {
+    if (error) {
+      return res.json({
+        resultCode: 5000,
+        errorDescription: '获取失败'
+      })
+    }
+    if (results&&results[0]) {
+      return res.json({
+        resultCode: 200,
+        data: results[0]
+      })
+    } else {
+      return res.json({
+        resultCode: 5000,
+        errorDescription: '尚未获取到数据'
+      })
+    }
+  })
+})
+
 router.post('/delete-note', function(req, res, results) {
   
 })
