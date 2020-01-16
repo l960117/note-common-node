@@ -15,7 +15,7 @@ const sql = {
   getNoteDetailSql: 'select * from (select * from note_list where noteId=?)as a left join(select * from account )as b on a.openid=b.openid',
   getFollowSql: 'select * from (select * from relation where openid=?)as a left join account on a.openid=account.openid',
   getFensSql: 'select * from (select * from relation where friendid=?)as a left join account on a.openid=account.openid',
-  getRecommendSql: 'select * from (select openid as id from relation where openid=?)as a left join account on a.id<>account.openid order by rand() limit 3',
+  getRecommendSql: 'select cu.openid,cu.avatar,cu.nickname,cm.friendid from account as cu left join (select friendid from relation where openid=?) as cm on cu.openid = cm.friendid where cm.friendid is NULL and cu.openid <> ? order by rand() limit 3',
   addFollowSql: 'insert into relation (openid, friendid) values (?,?)',
   cancelFollowSql: 'delete from relation where openid=? and friendid=?',
   getNoteInfoSql: 'select count(*) from note_list where openid=?',

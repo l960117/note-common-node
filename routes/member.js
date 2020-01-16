@@ -87,7 +87,7 @@ router.post('/getFollowAndFens', async function(req, res, next) {
 })
 
 router.post('/getRecommend', function(req, res, next) {
-  conn.query(sql.getRecommendSql, req.body.openid, (error, results) => {
+  conn.query(sql.getRecommendSql, [req.body.openid, req.body.openid], (error, results) => {
     if (error) {
       console.log(error)
       return res.json({
